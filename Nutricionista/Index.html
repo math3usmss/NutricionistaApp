@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/styles.css">
+    <title>Contador de Calorias</title>
+</head>
+
+<body>
+    <div class="main-login">
+        <div class="Left-login">
+            <h1 class="h1-left-login">Faça login <p>Entre para o nosso time</p>
+            </h1>
+            <img src="img/healthy-options-animate.svg" class="Left-login-img" alt="Saúde">
+        </div>
+        <div class="right-login" id="login">
+            <div class="card-login" id="card-login">
+                <h1>login</h1>
+                <div class="textfield">
+                    <label for="usuario">Usuário</label>
+                    <input type="text" name="usuario" placeholder="Usuário" required>
+                </div>
+                <div class="textfield">
+                    <label for="senha">Senha</label>
+                    <input type="password" name="senha" placeholder="Senha" required>
+                </div>
+                <a href="grafico alimento/index.html"><button class="btn-login">login</button></a>
+                <p class="link-cadastro">Não possui login ? <a href="#" id="trocarDivs">Cadastre-se</a></p>
+            </div>
+
+            <div class="card-register" style="display: none;" id="registro">
+                <h1>Registro</h1>
+                <div class="textfield">
+                    <label for="usuario">Usuário</label>
+                    <input type="text" name="usuario" placeholder="Usuário" required>
+                </div>
+                <div class="textfield">
+                    <label for="email">Email</label>
+                    <input type="email" name="email" placeholder="Email" required>
+                </div>
+                <div class="textfield">
+                    <label for="senha">Senha</label>
+                    <input type="password" name="senha" placeholder="Senha" required>
+                </div>
+                <div class="textfield">
+                    <label for="altura">Altura(cm)</label>
+                    <input type="text" name="altura" id="altura" placeholder="Altura" required>
+                </div>
+                <div class="textfield">
+                    <label for="peso">Peso(kg)</label>
+                    <input type="text" name="peso" id="peso" placeholder="Peso" required>
+                </div>
+                <div class="textfield">
+                    <label for="idade">Idade</label>
+                    <input type="text" name="idade" id="idade" placeholder="Idade" required>
+                </div>
+                <a href="grafico alimento/index.html"><button  class="btn-register" id="btn-register"> registrar </button></a>
+                <p class="link-cadastro">voltar para a tela <a href="">Login</a></p>
+            </div>
+        </div>
+    </div>
+    <script src="js/script.js"></script>
+    <script src="/grafico alimento/script.js"></script>
+</body>
+
+</html>
