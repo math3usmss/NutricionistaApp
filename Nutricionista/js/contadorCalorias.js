@@ -1,63 +1,48 @@
-document.addEventListener("DOMContentLoaded", function() {
-    const foodData = {
-        "banana": { carbs: 27, protein: 1.3, fat: 0.4 },
-        "maçã": { carbs: 25, protein: 0.5, fat: 0.3 },
-        "frango": { carbs: 0, protein: 27, fat: 3.6 },
-        "arroz": { carbs: 45, protein: 2.2, fat: 0.4 }
-    };
+/**
+* This function allows you to go to an specific frame of the animation
+* Remember the frames are a percentage number, so it goes from 0 to 100
+**/
+function goTo(frame){
+	reset(); // Just reset
+	
+  //For some reason Javascript needs a time to remove animate class. I tried to use as callback from reset but it just didnt work. 
+  setTimeout(function(){
+  	//Get components
+    var chart = document.getElementById("radioChartContent"), pVal = document.getElementById("percentValue");
 
-    const foodInput = document.getElementById("food-input");
-    const searchButton = document.getElementById("search-button");
-    const foodDetails = document.getElementById("food-details");
+		//Add animate
+    chart.classList.add("animate");
 
-    searchButton.addEventListener("click", function() {
-        const searchTerm = foodInput.value.toLowerCase();
-        if (foodData.hasOwnProperty(searchTerm)) {
-            const food = foodData[searchTerm];
-            foodDetails.innerHTML = `
-                <h2>${searchTerm}</h2>
-                <p>Carboidratos: ${food.carbs}g</p>
-                <p>Proteínas: ${food.protein}g</p>
-                <p>Gorduras: ${food.fat}g</p>
-            `;
-        } else {
-            foodDetails.innerHTML = "<p>Alimento não encontrado</p>";
+    var currentPercent = 0; //Initial percentage
+
+		//Get percentage one by one
+    var currTimeout = setInterval(function(){
+    	//Check is reach the limit
+      if(currentPercent == frame || currentPercent > 100){
+      		
+          //Clear interval
+          clearInterval(currTimeout);
+          //Pause animation
+          chart.style.animationPlayState = "paused";
+          chart.style.webkitAnimationPlayState = "paused"; //if webkit
+          
+          return false;
+        }else{
+        	//Sum percentage
+          currentPercent++;
+          //show new percentage
+          pVal.innerHTML = currentPercent+"%";
         }
-    });
-});
+    }, 10); //We are using 10 cause it reference by a 1 second (1000 miliseconds) animation. If you're using 4 seconds, change to 40 as  example
+  },100);
+}
 
-
-//contador de calorias
-
-        const listaAlimentos = document.getElementById('lista-alimentos');
-        const totalCalorias = document.getElementById('total-calorias');
-
-        function adicionarAlimento() {
-            const nomeInput = document.getElementById('nome');
-            const caloriasInput = document.getElementById('calorias');
-
-            const nome = nomeInput.value.trim();
-            const calorias = parseInt(caloriasInput.value);
-
-            if (nome && !isNaN(calorias) && calorias > 0) {
-                const novoItem = document.createElement('li');
-                novoItem.textContent = `${nome}: ${calorias} calorias`;
-                listaAlimentos.appendChild(novoItem);
-
-                // Atualizar o total de calorias
-                const totalAtual = parseInt(totalCalorias.textContent);
-                totalCalorias.textContent = totalAtual + calorias;
-
-                // Limpar os campos de entrada
-                nomeInput.value = '';
-                caloriasInput.value = '';
-            } else {
-                alert('Por favor, insira um nome de alimento válido e um valor de calorias positivo.');
-            }
-        }
-
-        document.getElementById('adicionar').addEventListener('click', adicionarAlimento);
-    
-//calorias necessarias
-const idade = document.getElementById('idade').value
-console.log(idade)
+//Reset to initial position
+function reset(){
+	var chart = document.getElementById("radioChartContent"), pVal = document.getElementById("percentValue");
+  
+  chart.classList.remove("animate");
+  pVal.innerHTML = "0%";
+  chart.style.animationPlayState = "initial";
+  chart.style.webkitAnimationPlayState = "initial"; //if webkit
+}

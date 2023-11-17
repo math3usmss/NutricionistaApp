@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/login.css">
+    <title>Contador de Calorias</title>
+</head>
+
+<body>
+    <header>
+        <h1 class="titulo">NutricionistaApp</h1>
+    </header>
+    <div class="container">
+        <main>
+            <div class="cadastro">
+                <h1 class="titulo">Registro</h1>
+                    <form>
+                        <div class="areaRegistro">
+                            <label class="label" for="usuario">Usuário:</label>
+                            <input class="input" type="text" name="usuario" placeholder="Usuário" required>
+                        </div>
+                        <div class="areaRegistro">
+                            <label class="label" for="email">Email:</label>
+                            <input class="input" type="email" name="email" placeholder="Email" required>
+                        </div>
+                        <div class="areaRegistro">
+                            <label class="label" for="senha">Senha:</label>
+                            <input class="input" type="password" name="senha" placeholder="Senha" required>
+                        </div>
+    
+                        <div class="areaRegistro">
+                            <label class="label" for="idade">Idade:</label>
+                            <input class="input" type="text" name="idade" id="idade" placeholder="Idade" required>
+                        </div>
+    
+                        <div class="registroBasal">
+                            <div>
+                                <label class="label" for="altura">Altura(cm):</label>
+                            <input class="input" type="text" name="altura" id="altura" placeholder="Altura" required>
+                            </div>
+                            
+                            <div>
+                                <label class="label" for="peso">Peso(kg):</label>
+                            <input class="input" type="text" name="peso" id="peso" placeholder="Peso" required>
+                            </div>
+                        </div>
+                    </form>
+    
+                    <button class="btn" id="btn-register" type="submit">registrar-se</button>
+            </div>
+            <div class="login">
+                <h1 class="titulo">login</h1>
+    
+                    <form class="areaLogin">
+                        <div>
+                            <label class="label" for="usuario">Usuário:</label>
+                            <input class="input" type="text" name="usuario" placeholder="Usuário" required>
+                        </div>
+                        
+                        <div>
+                            <label class="label" for="senha">Senha:</label>
+                            <input class="input" type="password" name="senha" placeholder="Senha" required>
+                        </div>
+                    </form>
+    
+                    <button class="btn" type="submit">login</button>
+            </div>
+        </main>
+    </div>
+    <footer>
+        <p>&copy; Todos os direitos reservados</p>
+    </footer>    
+    <script src="js/script.js"></script>
+</body>
+
+</html>
