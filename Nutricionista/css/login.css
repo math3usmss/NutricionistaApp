@@ -14,7 +14,6 @@ body{
 }
 
 header{
-    background-color: #2f2841;
     display: flex;
     align-items: center;
     justify-content: space-around;
@@ -31,6 +30,7 @@ main{
 
 
 input{
+    width: 100%;
     padding: 10px;
     margin: 10px 0;
     border: none;
@@ -38,13 +38,26 @@ input{
     background-color: #cbcacf;
 }
 
-.cadastro, .login{
+.login, .cadastro{
     background-color: #2f2841;
     color: #fff;
-    padding: 30px 35px;
+    padding: 40px 55px;
     border-radius: 10px;
     margin: 20px 0;
     box-shadow: rgba(0, 0, 0, 0.12) 0px 8px 32px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.cadastre-se{
+    color: #00ff88;
+    text-transform: uppercase;
+    text-decoration: none;
+    background: none;
+    border: none;
+    cursor: pointer;
 }
 
 .btn{
@@ -62,37 +75,23 @@ input{
     background: #00ff88;
 }
 
-.registro{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 30px 35px;
-    background-color: #2f2841;
-    border-radius: 10px;
-    box-shadow: 0px 10px 40px #00000056;
+
+.cadastro label, .login label{
+    display: block;
+    
 }
 
-.registro div{
-    margin: 10px 0;
-}
-
-.areaRegistro input{
-    width: 100%;
-}
-
-.registroBasal{
-    display: flex;
-    gap: 20px;
-}
+.error-text{
+    font-size:  12px;
+    color: red;
+  }
 
 footer{
     text-align: center;
     padding: 30px;
     text-transform: uppercase;
     box-shadow: 0px 2px 10px  #00ff8052;
-    background-color: #2f2841;
-    color: #fff;
+    color: #000;
 }
 
 

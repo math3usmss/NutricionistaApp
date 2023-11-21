@@ -14,65 +14,73 @@
     </header>
     <div class="container">
         <main>
-            <div class="cadastro">
+            <div class="cadastro" style="display: none;">
                 <h1 class="titulo">Registro</h1>
-                    <form>
-                        <div class="areaRegistro">
-                            <label class="label" for="usuario">Usuário:</label>
-                            <input class="input" type="text" name="usuario" placeholder="Usuário" required>
-                        </div>
-                        <div class="areaRegistro">
-                            <label class="label" for="email">Email:</label>
-                            <input class="input" type="email" name="email" placeholder="Email" required>
-                        </div>
-                        <div class="areaRegistro">
-                            <label class="label" for="senha">Senha:</label>
-                            <input class="input" type="password" name="senha" placeholder="Senha" required>
-                        </div>
+                <form action="" class="formulario">
+                    <div>
+                        <label class="label" for="nome">Nome:</label>
+                        <input type="text" id="nome" class="nome validar" >
+                    </div>
+
+                    <div>
+                        <label class="label" for="sobrenome">Sobrenome:</label>
+                    <input type="text" id="sobrenome" class="sobrenome validar">
+                    </div>
+
+                    <div>
+                        <label class="label" for="email">Email:</label>
+                    <input type="text" id="email" class="email validar">
+                    </div>
+
+                    <div>
+                        <label class="label senha" for="senha">Senha:</label>
+                    <input type="password" id="senha" class="senha validar">
+                    </div>
     
-                        <div class="areaRegistro">
-                            <label class="label" for="idade">Idade:</label>
-                            <input class="input" type="text" name="idade" id="idade" placeholder="Idade" required>
-                        </div>
-    
-                        <div class="registroBasal">
-                            <div>
-                                <label class="label" for="altura">Altura(cm):</label>
-                            <input class="input" type="text" name="altura" id="altura" placeholder="Altura" required>
-                            </div>
-                            
-                            <div>
-                                <label class="label" for="peso">Peso(kg):</label>
-                            <input class="input" type="text" name="peso" id="peso" placeholder="Peso" required>
-                            </div>
-                        </div>
-                    </form>
-    
-                    <button class="btn" id="btn-register" type="submit">registrar-se</button>
+                    <button type="submit" class="btn">Cadastra-se</button>
+                </form>
+                <button class="cadastre-se" id="btn-voltar-login">Voltar para Login</button>
             </div>
+
+
             <div class="login">
-                <h1 class="titulo">login</h1>
-    
-                    <form class="areaLogin">
-                        <div>
-                            <label class="label" for="usuario">Usuário:</label>
-                            <input class="input" type="text" name="usuario" placeholder="Usuário" required>
-                        </div>
-                        
-                        <div>
-                            <label class="label" for="senha">Senha:</label>
-                            <input class="input" type="password" name="senha" placeholder="Senha" required>
-                        </div>
-                    </form>
-    
-                    <button class="btn" type="submit">login</button>
+                <h1 class="titulo">Login</h1>
+                <form class="areaLogin">
+                    <div>
+                        <label class="label" for="email">Email:</label>
+                        <input class="input" type="email" name="email" placeholder="Email" required>
+                    </div>
+
+                    <div>
+                        <label class="label" for="senha">Senha:</label>
+                        <input class="input validar" type="password" name="senha" placeholder="Senha" required>
+                    </div>
+                </form>
+                <button class="btn" type="submit">Login</button>
+                <button class="cadastre-se" id="btn-cadastro">Cadastre-se</button>
             </div>
         </main>
     </div>
     <footer>
         <p>&copy; Todos os direitos reservados</p>
-    </footer>    
-    <script src="js/script.js"></script>
-</body>
+    </footer>
 
-</html>
+    <script src="js/login.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var btnCadastro = document.getElementById("btn-cadastro");
+            var btnVoltarLogin = document.getElementById("btn-voltar-login");
+            var formCadastro = document.querySelector(".cadastro");
+            var formLogin = document.querySelector(".login");
+
+            btnCadastro.addEventListener("click", function () {
+                formCadastro.style.display = "block";
+                formLogin.style.display = "none";
+            });
+
+            btnVoltarLogin.addEventListener("click", function () {
+                formCadastro.style.display = "none";
+                formLogin.style.display = "block";
+            });
+        });
+    </script>

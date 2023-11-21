@@ -6,88 +6,105 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pesquisa de Alimentos</title>
     <link rel="stylesheet" href="css/contadorCaloriasStyle.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 </head>
 
 <body>
     <header>
         <h1 class="titulo">NutricionistaApp</h1>
+        <a class="perfil" href="PerfilCliente.html"><img src="img/icons8-usuário-homem-com-círculo-50 (1).png" alt=""></a>
     </header>
 
-    <h2 class='titulo' style="text-align: center; font-size: 35px; margin-top: 20px;">Contador de calorias</h2>
-    <div id="left-side" class="pesquisa">
-        <div class='blocoAlimento'>
-            <input type="text" id="nomeAlimento" placeholder="ALIMENTO">
-        </div>
-        
-        <div class='blocoQtd'>
-            <input style="border-radius: 10px 0 0 10px;" type="text" id="quantidade" placeholder="QUANTIDADE">
-
-            <select id="unidade" style="padding: 10px;">
-                <option value="gramas">Gramas</option>
-                <option value="xicaras">Xícaras</option>
-                <option value="colheres">Colheres</option>
-            </select>
-        </div>
-
-        <button onclick="adicionarAlimento()" class="btn">Contabilizar</button>
-    </div>
-
-
-    <div class="areaContador">
-        <div id="right-side" class="div-right">
-            <h1 class="titulo">Alimentos Consumidos:</h1>
-            <div class="card-result">
-                <ul id="listaAlimentos"></ul>
-            </div>
-        </div>
+    <div class="container">
         <div>
-            <h1 class="titulo">Calorias Totais:</h1>
-            <div class="row d-flex justify-content-center mt-100">
+            <div id="left-side" class="pesquisa">
+                <div class='blocoAlimento'>
+                    <input type="text" id="nomeAlimento" placeholder="ALIMENTO">
+                    <button onclick="adicionarAlimento()" class="btn">Contabilizar</button>
+                </div>
+            </div>
+    
+            <div id="right-side" class="div-right">
+                <h1 class="titulo">Alimentos Consumidos:</h1>
+                <div class="card-result">
+                    <ul id="listaAlimentos">
+                    </ul>
+                </div>
+            </div>
+        </div>
 
-                <div class="col-md-6">
-                    <div class="progress blue">
-                      <span class="progress-left">
-                                        <span class="progress-bar"></span>
-                      </span>
-                      <span class="progress-right">
-                                        <span class="progress-bar"></span>
-                      </span>
-                      <div class="progress-value">2500</div>
-                    </div>
-                </div>   
+        <div class="CalculadoraCalorias">
+            <h1 class="titulo">Calculadora de calorias</h1>
+            <div class="containerCalculadora">
+                <div>
+                    <label for="gender">Gênero:</label>
+                    <select id="gender" name="gender">
+                        <option value="male">Masculino</option>
+                        <option value="female">Feminino</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="label" for="age">Idade:</label>
+                    <input type="number" id="age" name="age" required>
+                </div>
+                <div>
+                    <label for="weight">Peso (kg):</label>
+                    <input type="number" id="weight" name="weight" required>
+                </div>
+                <div>
+                    <label for="height">Altura (cm):</label>
+                    <input type="number" id="height" name="height" required>
+                </div>
+                <div>
+                    <label for="activityLevel">Nível de Atividade:</label>
+                    <select id="activityLevel" name="activityLevel">
+                        <option value="sedentary">Sedentário</option>
+                        <option value="lightlyActive">Levemente Ativo</option>
+                        <option value="moderatelyActive">Moderadamente Ativo</option>
+                        <option value="veryActive">Muito Ativo</option>
+                    </select>
+                </div>
+                <button class="btn" onclick="calculateCalories()">Calcular Calorias</button>
+                <div id="result"></div>
             </div>
         </div>
     </div>
-    
+
     <footer>
         <p>&copy; Todos os direitos reservados</p>
     </footer>
 
     
     <script src="js/contadorCalorias.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
     <script>
         function adicionarAlimento() {
-            // Obter valores do input
-            const nomeAlimento = document.getElementById('nomeAlimento').value;
-            const quantidade = document.getElementById('quantidade').value;
-            const unidade = document.getElementById('unidade').value;
-
-            // Construir o texto a ser exibido na lista
-            const textoAlimento = `${quantidade} ${unidade} de ${nomeAlimento}`;
-
-            // Criar um novo item na lista
-            const novoItem = document.createElement('li');
-            novoItem.textContent = textoAlimento;
-
-            // Adicionar o novo item à lista de alimentos consumidos
-            const listaAlimentos = document.getElementById('listaAlimentos');
-            listaAlimentos.appendChild(novoItem);
-
-            // Limpar os campos de entrada
-            document.getElementById('nomeAlimento').value = '';
-            document.getElementById('quantidade').value = '';
+            // Obter o valor do input
+            var nomeAlimento = document.getElementById("nomeAlimento").value;
+    
+            // Validar se o input não está vazio
+            if (nomeAlimento.trim() !== "") {
+                // Adicionar o alimento à lista
+                var listaAlimentos = document.getElementById("listaAlimentos");
+                var novoItem = document.createElement("li");
+                novoItem.appendChild(document.createTextNode(nomeAlimento));
+                listaAlimentos.appendChild(novoItem);
+    
+                // Limpar o campo de input
+                document.getElementById("nomeAlimento").value = "";
+    
+                // Atualizar o total de calorias (pode adicionar um valor específico se desejar)
+                atualizarTotalCalorias();
+            }
+        }
+    
+        function atualizarTotalCalorias() {
+            var listaAlimentos = document.getElementById("listaAlimentos");
+            var totalCaloriasElement = document.getElementById("totalCalorias");
+    
+            // Calcular o total de calorias com base no número de itens na lista (pode ser personalizado conforme necessário)
+            var totalCalorias = listaAlimentos.children.length;
+    
+            // Atualizar o elemento HTML
+            totalCaloriasElement.textContent = totalCalorias;
         }
     </script>
 </body>

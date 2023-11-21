@@ -1,48 +1,44 @@
-/**
-* This function allows you to go to an specific frame of the animation
-* Remember the frames are a percentage number, so it goes from 0 to 100
-**/
-function goTo(frame){
-	reset(); // Just reset
-	
-  //For some reason Javascript needs a time to remove animate class. I tried to use as callback from reset but it just didnt work. 
-  setTimeout(function(){
-  	//Get components
-    var chart = document.getElementById("radioChartContent"), pVal = document.getElementById("percentValue");
 
-		//Add animate
-    chart.classList.add("animate");
+        function calculateCalories() {
+            const gender = document.getElementById('gender').value;
+            const age = parseInt(document.getElementById('age').value);
+            const weight = parseFloat(document.getElementById('weight').value);
+            const height = parseFloat(document.getElementById('height').value);
+            const activityLevel = document.getElementById('activityLevel').value;
 
-    var currentPercent = 0; //Initial percentage
+            if (isNaN(age) || isNaN(weight) || isNaN(height)) {
+                alert('Por favor, preencha todos os campos com valores numéricos.');
+                return;
+            }
 
-		//Get percentage one by one
-    var currTimeout = setInterval(function(){
-    	//Check is reach the limit
-      if(currentPercent == frame || currentPercent > 100){
-      		
-          //Clear interval
-          clearInterval(currTimeout);
-          //Pause animation
-          chart.style.animationPlayState = "paused";
-          chart.style.webkitAnimationPlayState = "paused"; //if webkit
-          
-          return false;
-        }else{
-        	//Sum percentage
-          currentPercent++;
-          //show new percentage
-          pVal.innerHTML = currentPercent+"%";
+            let bmr;
+
+            if (gender === 'male') {
+                bmr = 88.362 + (13.397 * weight) + (4.799 * height) - (5.677 * age);
+            } else {
+                bmr = 447.593 + (9.247 * weight) + (3.098 * height) - (4.330 * age);
+            }
+
+            let tdee;
+
+            switch (activityLevel) {
+                case 'sedentary':
+                    tdee = bmr * 1.2;
+                    break;
+                case 'lightlyActive':
+                    tdee = bmr * 1.375;
+                    break;
+                case 'moderatelyActive':
+                    tdee = bmr * 1.55;
+                    break;
+                case 'veryActive':
+                    tdee = bmr * 1.725;
+                    break;
+                default:
+                    alert('Selecione um nível de atividade.');
+                    return;
+            }
+
+            const resultElement = document.getElementById('result');
+            resultElement.innerHTML = `Para manter seu peso você precisa consumir aproximadamente ${Math.round(tdee)} calorias por dia.`;
         }
-    }, 10); //We are using 10 cause it reference by a 1 second (1000 miliseconds) animation. If you're using 4 seconds, change to 40 as  example
-  },100);
-}
-
-//Reset to initial position
-function reset(){
-	var chart = document.getElementById("radioChartContent"), pVal = document.getElementById("percentValue");
-  
-  chart.classList.remove("animate");
-  pVal.innerHTML = "0%";
-  chart.style.animationPlayState = "initial";
-  chart.style.webkitAnimationPlayState = "initial"; //if webkit
-}
