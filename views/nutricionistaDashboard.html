@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/PrepararRefStyle.css">
+  <title>Contador de Calorias</title>
+</head>
+
+<body>
+  <header>
+    <h1 class="titulo">NutricionistaApp</h1>
+    <a class="perfil" href="login.html">Sair</a>
+  </header>
+  <div class="main">
+    <div class="container-ref">
+      <div class="card-qtd-ref">
+        <h1>Preparar plano alimentar</h1>
+        <div class="textfield">
+          <label for="qtdRef">Quantidade de refeições</label>
+          <input type="text" name="qtdRef" value="" required class="qtdRefeicao">
+          <button type="button" class="btn-preparar">Preparar</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="container">
+      <ul id="listaItens"></ul>
+    </div>
+
+    <button class="btn-preparar" id="salvarBtn">Salvar</button>
+
+  </div>
+
+  <!-- Adicione o script FileSaver.js -->
+  <script src="js/index.js"></script>
+  <script>
+    document.querySelector('.btn-preparar').addEventListener('click', renderizarBlocos);
+    document.querySelector('#salvarBtn').addEventListener('click', salvarDados);
+
+    const dadosRefeicoes = [];
+
+    function renderizarBlocos() {
+      const container = document.getElementById('container');
+      container.innerHTML = ''; // Limpar o conteúdo anterior
+
+      const qtdRepeticoes = document.querySelector('.qtdRefeicao').value;
+
+      // Limpar dados de refeições anteriores
+      dadosRefeicoes.length = 0;
+
+      for (let i = 0; i < qtdRepeticoes; i++) {
+        const blocoHTML = criarBlocoHTML(i + 1);
+
+        // Adicionar o bloco à página
+        container.innerHTML += blocoHTML;
+      }
+    }
+
+    function criarBlocoHTML(i) {
+      const bloco = `
+        <div class="bloco">
+          <h2 class='titulo'>Refeição ${i}</h2>
+
+          <div class='blocoAlimento'>
+            <label for="alimento${i}">Alimento:</label>
+            <input class='inputRef' type="text" id="alimento${i}" />
+          </div>
+          
+          <div class='blocoQtd'>
+            <label for="quantidade${i}">Quantidade:</label>
+
+            <div class='blocoQtd-input'>
+              <input class='inputRef' type="text" id="quantidade${i}" />
+
+              <select id="porcao${i}">
+                <option value="gramas">Gramas</option>
+                <option value="xicara">Xícara</option>
+                <option value="colheres">Colheres</option>
+              </select>
+            </div>
+          </div>
+          
+          <button class="btn-preparar" onclick="adicionarItem(${i})">Adicionar</button>
+          <ul id="listaItens${i}"></ul>
+        </div>
+      `;
+
+      return bloco;
+    }
+
+    function adicionarItem(numeroBloco) {
+      const alimentoInput = document.getElementById(`alimento${numeroBloco}`);
+      const quantidadeInput = document.getElementById(`quantidade${numeroBloco}`);
+      const porcaoInput = document.getElementById(`porcao${numeroBloco}`);
+      const listaItens = document.getElementById(`listaItens${numeroBloco}`);
+
+      const alimento = alimentoInput.value;
+      const quantidade = quantidadeInput.value;
+      const porcao = porcaoInput.value;
+
+      const novoItem = document.createElement('li');
+      novoItem.innerHTML = `${quantidade} ${porcao} de ${alimento} <button class='btn-apagar' onclick="apagarItem(this)"><img src="img/icons8-lixeira-30.png" alt=""></button>`;
+      listaItens.appendChild(novoItem);
+
+      // Adicionar os dados à estrutura
+      dadosRefeicoes.push({ numeroBloco, alimento, quantidade, porcao });
+
+      // Limpar os inputs
+      alimentoInput.value = '';
+      quantidadeInput.value = '';
+      porcaoInput.value = '';
+    }
+
+    function apagarItem(elemento) {
+      const listItem = elemento.parentNode;
+      listItem.parentNode.removeChild(listItem);
+    }
+
+    function salvarDados() {
+      const dadosString = dadosRefeicoes.map(item => `${item.numeroBloco}: ${item.alimento}, ${item.quantidade}, ${item.porcao}`).join('\n');
+
+      // Criar um Blob com os dados
+      const blob = new Blob([dadosString], { type: 'text/plain' });
+
+      // Criar um link para o Blob
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = 'dadosRefeicoes.txt';
+
+      // Adicionar o link à página e acionar o clique
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+
+      // Tentar abrir o WhatsApp
+      window.open('https://web.whatsapp.com', '_blank');
+    }
+  </script>
+</body>
+
+</html>

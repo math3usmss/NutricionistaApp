@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pesquisa de Alimentos</title>
+    <link rel="stylesheet" href="css/contadorCaloriasStyle.css">
+</head>
+
+<body>
+    <header>
+        <h1 class="titulo">NutricionistaApp</h1>
+        <a href="/login" class="perfil" href="PerfilCliente.html">Sair</a>
+    </header>
+
+    <div class="container">
+        <div>
+            <div id="left-side" class="pesquisa">
+                <div class='blocoAlimento'>
+                    <input type="text" id="nomeAlimento" placeholder="ALIMENTO">
+                    <button onclick="adicionarAlimento()" id="contabilizar" class="btn">Contabilizar</button>
+                </div>
+                <p style="display: block; font-size: 18px; color: #000; font-weight: bold;">A cada 100 gramas</p>
+            </div>
+            
+    
+            <div id="right-side" class="div-right">
+                <h1 class="titulo">Alimentos Consumidos:</h1>
+                <h1 class="titulo">Calorias Totais: <span style="color: #000;" id="numeroCalorias"></span></h1>
+                <div class="card-result">
+                    <ul id="listaAlimentos">
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="CalculadoraCalorias">
+            <h1 class="titulo">Calculadora de calorias</h1>
+            <div class="containerCalculadora">
+                <div>
+                    <label for="gender">Gênero:</label>
+                    <select id="gender" name="gender">
+                        <option value="male">Masculino</option>
+                        <option value="female">Feminino</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="label" for="age">Idade:</label>
+                    <input type="number" id="age" name="age" required>
+                </div>
+                <div>
+                    <label for="weight">Peso (kg):</label>
+                    <input type="number" id="weight" name="weight" required>
+                </div>
+                <div>
+                    <label for="height">Altura (cm):</label>
+                    <input type="number" id="height" name="height" required>
+                </div>
+                <div>
+                    <label for="activityLevel">Nível de Atividade:</label>
+                    <select id="activityLevel" name="activityLevel">
+                        <option value="sedentary">Sedentário</option>
+                        <option value="lightlyActive">Levemente Ativo</option>
+                        <option value="moderatelyActive">Moderadamente Ativo</option>
+                        <option value="veryActive">Muito Ativo</option>
+                    </select>
+                </div>
+                <button class="btn" onclick="calculateCalories()">Calcular Calorias</button>
+                <div id="result"></div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; Todos os direitos reservados</p>
+    </footer>
+
+    <script src="js/contadorCalorias.js"></script>
+    <script>
+        async function adicionarAlimento() {
+            var nomeAlimento = document.getElementById("nomeAlimento").value;
+
+            if (nomeAlimento.trim() !== "") {
+                try {
+                    const response = await fetch(`/api/food/${nomeAlimento}`);
+                    const data = await response.json();
+
+                    if (data && !data.error) {
+                        var listaAlimentos = document.getElementById("listaAlimentos");
+                        var alimentoExistente = Array.from(listaAlimentos.children).find(item => item.textContent.includes(data.nome));
+
+                        if (!alimentoExistente) {
+                            adicionarItemALista(
+                                `${data.nome} - Calorias: ${data.calorias}, Carboidratos: ${data.carboidratos}, Gorduras: ${data.gorduras}, Proteína: ${data.proteina}`
+                            );
+
+                            document.getElementById("nomeAlimento").value = "";
+                            atualizarTotalCalorias();
+                        } else {
+                            console.log('O alimento já está na lista.');
+                        }
+                    } else {
+                        console.log(data.message || "Erro ao recuperar informações do alimento.");
+                    }
+                } catch (error) {
+                    console.error("Erro ao fazer a requisição:", error);
+                }
+            }
+        }
+
+        function adicionarItemALista(itemText) {
+    var listaAlimentos = document.getElementById("listaAlimentos");
+    var novoItem = document.createElement("li");
+
+    // Criar o botão de exclusão dinamicamente
+    var botaoExcluir = document.createElement("button");
+    
+    // Criar a imagem para o botão de exclusão
+    var imagemExcluir = document.createElement("img");
+    imagemExcluir.src = "img/icons8-lixeira-30.png"; // Substitua pelo caminho real da sua imagem
+    imagemExcluir.alt = "";
+
+    // Adicionar a imagem ao botão
+    botaoExcluir.appendChild(imagemExcluir);
+
+    botaoExcluir.onclick = function () {
+        // Chamar a função para remover o item da lista e do localStorage
+        removerItem(itemText);
+    };
+
+    // Adicionar o texto e o botão à lista
+    novoItem.appendChild(document.createTextNode(itemText));
+    novoItem.appendChild(botaoExcluir);
+
+    // Adicionar o novo item à lista no HTML
+    listaAlimentos.appendChild(novoItem);
+
+    // Salvar o item no localStorage
+    salvarItemNoLocalStorage(itemText);
+
+    // Chamar a função para atualizar o total de calorias
+    atualizarTotalCalorias();
+}
+
+
+function atualizarTotalCalorias() {
+    var listaAlimentos = document.getElementById("listaAlimentos");
+    var items = listaAlimentos.getElementsByTagName("li");
+
+    var totalCalorias = 0;
+
+    // Iterar sobre cada item da lista
+    for (var i = 0; i < items.length; i++) {
+        // Extrair a parte da string que contém as calorias (assumindo um formato consistente)
+        var caloriasPart = items[i].textContent.match(/Calorias: (\d+)/);
+
+        // Se encontrou as calorias, adicionar ao total
+        if (caloriasPart && caloriasPart[1]) {
+            totalCalorias += parseInt(caloriasPart[1], 10);
+        }
+    }
+
+    // Atualizar o valor do span com o total de calorias
+    document.getElementById("numeroCalorias").textContent = totalCalorias;
+}
+
+
+function removerItem(itemText) {
+    // Obter a lista atual do localStorage
+    var listaArmazenada = localStorage.getItem("listaAlimentos");
+
+    // Se houver uma lista armazenada, remover o item
+    if (listaArmazenada) {
+        var listaAtualizada = JSON.parse(listaArmazenada);
+
+        // Filtrar a lista para excluir o item
+        listaAtualizada = listaAtualizada.filter(item => item.text !== itemText);
+
+        // Atualizar a lista no localStorage
+        localStorage.setItem("listaAlimentos", JSON.stringify(listaAtualizada));
+    }
+
+    // Remover o item da lista no HTML
+    var listaAlimentos = document.getElementById("listaAlimentos");
+    var itemParaRemover = Array.from(listaAlimentos.children).find(item => item.textContent.includes(itemText));
+
+    if (itemParaRemover) {
+        // Extrair a parte da string que contém as calorias (assumindo um formato consistente)
+        var caloriasPart = itemParaRemover.textContent.match(/Calorias: (\d+)/);
+
+        // Se encontrou as calorias, subtrair do total
+        if (caloriasPart && caloriasPart[1]) {
+            var caloriasRemovidas = parseInt(caloriasPart[1], 10);
+            var totalCalorias = parseInt(document.getElementById("numeroCalorias").textContent, 10);
+
+            // Subtrair as calorias do total
+            totalCalorias -= caloriasRemovidas;
+
+            // Atualizar o valor do span com o total de calorias
+            document.getElementById("numeroCalorias").textContent = totalCalorias;
+        }
+
+        // Remover o item da lista no HTML
+        itemParaRemover.remove();
+    }
+}
+
+
+        function salvarItemNoLocalStorage(itemText) {
+            // Obter a lista atual do localStorage
+            var listaArmazenada = localStorage.getItem("listaAlimentos");
+
+            // Se não houver lista armazenada, criar uma nova lista
+            var listaAtualizada = listaArmazenada ? JSON.parse(listaArmazenada) : [];
+
+            // Verificar se o item já está na lista antes de adicioná-lo
+            if (!listaAtualizada.some(item => item.text === itemText)) {
+                // Adicionar o novo item à lista
+                listaAtualizada.push({ text: itemText });
+
+                // Salvar a lista no localStorage
+                localStorage.setItem("listaAlimentos", JSON.stringify(listaAtualizada));
+            }
+        }
+
+        function carregarListaDoLocalStorage() {
+            // Obter a lista atual do localStorage
+            var listaArmazenada = localStorage.getItem("listaAlimentos");
+
+            // Se houver uma lista armazenada, adicionar cada item à lista no HTML
+            if (listaArmazenada) {
+                var listaAtualizada = JSON.parse(listaArmazenada);
+
+                // Limpar a lista atual
+                var listaAlimentos = document.getElementById("listaAlimentos");
+                listaAlimentos.innerHTML = "";
+
+                // Adicionar cada item da lista ao HTML
+                listaAtualizada.forEach(item => adicionarItemALista(item.text));
+            }
+        }
+
+        // Chame a função para carregar a lista do localStorage assim que os scripts forem carregados
+        window.addEventListener("load", carregarListaDoLocalStorage);
+        </script>
+</body>
+
+</html>

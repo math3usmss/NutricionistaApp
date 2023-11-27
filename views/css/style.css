@@ -1,0 +1,118 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    background-color: #fff;
+}
+
+.titulo{
+    color: #00ff88;
+    text-align: center;
+}
+
+a{
+    text-decoration: none;
+    color: #000;
+    display: block;
+}
+
+header{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    padding: 10px 0;
+    box-shadow: 0px 1px 5px #00ff8052;
+}
+
+.btn{
+    width: 100%;
+    padding: 16px 32px;
+    margin: 25px 0;
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0px 10px 40px  #00ff8052;
+    outline: none;
+    text-transform: uppercase;
+    font-weight: 800;
+    letter-spacing: 3px;
+    cursor: pointer;
+    background: #00ff88;
+}
+
+.container{
+    max-width: 1220px;
+    margin: 0 auto;
+}
+
+.chamada{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 100px;
+}
+
+.chamada .btn{
+    text-align: center;
+    width: 50%;
+}
+
+.containerChamada .textao{
+    font-size: 50px;
+    max-width: 300px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.containerChamada .textoMonitora{
+    font-size: 20px;
+    max-width: 400px;
+}
+
+.chamada img{
+    width: 50%;
+}
+
+.chamadaNutricionista{
+    color: #000;
+    background: #00ff88;
+    padding: 50px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.chamadaNutricionista .btn{
+    background: #fff;
+    display: block;
+    width: 50%;
+    text-align: center;
+}
+
+.chamadaNutricionista img{
+    width: 350px;
+    height: 350px;
+    border-radius: 50%;
+}
+
+.chamadaNutricionista h1{
+    font-size: 40px;
+    margin-bottom: 20px;
+    max-width: 800px;
+}
+
+.chamadaNutricionista p{
+    font-size: 25px;
+    max-width: 800px;
+}
+
+footer{
+    text-align: center;
+    padding: 30px;
+    text-transform: uppercase;
+    box-shadow: 0px 2px 10px  #00ff8052;
+    color: #000;
+}

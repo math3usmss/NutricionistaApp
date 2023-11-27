@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/perfilUsuariostyle.css">
+    <link rel="stylesheet" href="css/PrepararRefStyle.css">
+    <title>Contador de Calorias</title>
+</head>
+
+<body>
+    <header>
+        <h1 class="titulo">NutricionistaApp</h1>
+        <a class="perfil" href="PerfilCliente.html">Contador</a>
+    </header>
+
+    <div class="main">
+        <h1 class="titulo">Bem-Vindo</h1>
+
+        <div id="resultado-container"></div>
+
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                const resultadoContainer = document.getElementById("resultado-container");
+
+                // Recuperar os dados da sessão de armazenamento local
+                const dadosRefeicoes = JSON.parse(localStorage.getItem("dadosRefeicoes")) || [];
+
+                if (dadosRefeicoes.length > 0) {
+                    let refeicaoAtual = null;
+
+                    dadosRefeicoes.forEach(({ numeroBloco, alimento, quantidade, porcao }) => {
+                        if (numeroBloco !== refeicaoAtual) {
+                            // Se o número da refeição for diferente da anterior, criar o cabeçalho
+                            const cabecalhoHTML = `<h1>Refeição ${numeroBloco}:</h1>`;
+                            resultadoContainer.innerHTML += cabecalhoHTML;
+                            refeicaoAtual = numeroBloco;
+                        }
+
+                        // Adicionar os dados do alimento
+                        const itemHTML = `<p>${quantidade} ${porcao} de ${alimento}</p>`;
+                        resultadoContainer.innerHTML += itemHTML;
+                    });
+                } else {
+                    resultadoContainer.innerHTML = "<p>Nenhum dado disponível.</p>";
+                }
+            });
+        </script>
+
+    </div>
+
+    <footer>
+        <p>&copy; Todos os direitos reservados</p>
+    </footer>
+
+    <script src="js/index.js"></script>
+</body>
+
+</html>

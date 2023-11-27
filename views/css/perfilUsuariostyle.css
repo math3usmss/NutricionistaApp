@@ -1,0 +1,16 @@
+body {
+    margin: 0;
+    background-color: #201b2c;
+    overflow-x: hidden;
+}
+
+body * {
+    box-sizing: border-box;
+}
+
+.main{
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: start;
+}

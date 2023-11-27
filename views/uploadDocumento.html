@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/login.css">
+    <title>Upload de Documento</title>
+</head>
+<body>
+    <header>
+        <h1 class="titulo">NutricionistaApp</h1>
+    </header>
+
+    <div class="container">
+        <main>
+            <div class="login">
+                <h1 class="titulo">Upload de Documento</h1>
+                <form class="formulario" action="/uploadDocumento" method="post" enctype="multipart/form-data">
+                    <label for="documento">Envie frente e verso do documento:</label>
+                    <input type="file" id="documento" name="documento" required><br>
+
+                    <button class="btn" type="submit">Enviar Documento</button>
+                </form>
+            </div>
+        </main>
+    </div>
+
+    <footer>
+        <p>&copy; Todos os direitos reservados</p>
+    </footer>
+    
+</body>
+</html>
