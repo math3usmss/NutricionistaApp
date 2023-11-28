@@ -16,6 +16,10 @@
         <main>
             <div class="login">
                 <h1 class="titulo">Página de Login</h1>
+                
+                <div id="erro-login" class="erro-mensagem" style="display: none;  color: #ff0000; /* Vermelho */
+                margin-top: 10px;">Login ou senha inválidos</div>
+
                 <form class="formulario" action="/login" method="post">
                     <label for="username">Nome de Usuário:</label>
                     <input type="text" id="username" name="username" required>
@@ -24,7 +28,7 @@
                     <input type="password" id="password" name="password" required>
                     <br>
                     <button class="btn" type="submit">Login</button>
-                    <a href="/register" class="cadastre-se" id="btn-cadastro">cadastra-se</a>
+                    <a href="/register" class="cadastre-se" id="btn-cadastro">Cadastrar-se</a>
                 </form>
             </div>
         </main>
@@ -33,5 +37,16 @@
     <footer>
         <p>&copy; Todos os direitos reservados</p>
     </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Verifica se há uma mensagem de erro e a exibe
+            const erroMensagem = document.getElementById('erro-login').innerText.trim();
+            if (erroMensagem.length > 0) {
+                const divErro = document.getElementById('erro-login');
+                divErro.style.display = 'block';
+            }
+        });
+    </script>
 </body>
 </html>
